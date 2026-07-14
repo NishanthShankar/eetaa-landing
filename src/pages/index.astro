@@ -24,6 +24,14 @@ const products = [
     description:
       'RadMyk turns speech into text in real time, entirely on-device - no cloud, no account, no internet required. It types directly into any application on Windows and macOS, and residents in training use it free.',
   },
+  {
+    num: '03',
+    name: 'OnlyRads',
+    stealth: true,
+    tagline: 'Where radiology talks',
+    description:
+      'OnlyRads is a text-based social community built for radiologists - part LinkedIn, part Reddit, part Instagram. A place to discuss cases, careers, and the craft with peers who read the same images. Currently in stealth.',
+  },
 ];
 
 const services = [
@@ -71,6 +79,7 @@ const jsonLd = JSON.stringify({
   brand: [
     { '@type': 'Brand', name: 'Skia', url: 'https://skia.io' },
     { '@type': 'Brand', name: 'RadMyk', url: 'https://radmyk.com' },
+    { '@type': 'Brand', name: 'OnlyRads' },
   ],
 });
 ---
@@ -144,7 +153,7 @@ const jsonLd = JSON.stringify({
         <div class="section-head reveal">
           <span class="index">A</span>
           <h2>Products</h2>
-          <p class="section-note">Two products, both born inside radiology practices.</p>
+          <p class="section-note">Three products, all born inside radiology practices.</p>
         </div>
 
         <div class="product-list">
@@ -153,15 +162,23 @@ const jsonLd = JSON.stringify({
               <article class="product reveal">
                 <div class="product-meta">
                   <span class="mono">{p.num}</span>
-                  <a class="domain mono" href={p.url} target="_blank" rel="noopener">
-                    {p.domain} &nearr;
-                  </a>
+                  {p.stealth ? (
+                    <span class="stealth mono">In stealth</span>
+                  ) : (
+                    <a class="domain mono" href={p.url} target="_blank" rel="noopener">
+                      {p.domain} &nearr;
+                    </a>
+                  )}
                 </div>
                 <div class="product-body">
                   <h3>
-                    <a href={p.url} target="_blank" rel="noopener">
-                      {p.name}
-                    </a>
+                    {p.stealth ? (
+                      p.name
+                    ) : (
+                      <a href={p.url} target="_blank" rel="noopener">
+                        {p.name}
+                      </a>
+                    )}
                   </h3>
                   <p class="product-tagline">{p.tagline}</p>
                   <p class="product-desc">{p.description}</p>
@@ -518,6 +535,14 @@ const jsonLd = JSON.stringify({
 
       .domain:hover {
         color: var(--accent);
+      }
+
+      .stealth {
+        align-self: flex-start;
+        color: var(--accent-ink);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px 10px;
       }
 
       .product h3 {
